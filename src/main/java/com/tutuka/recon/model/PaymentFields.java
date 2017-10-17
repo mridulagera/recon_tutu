@@ -16,6 +16,8 @@ public interface PaymentFields {
 
 		@Override
 		public String getValue(Transaction var1) {
+			if (var1.getTransactionAmount() == null)
+				return null;
 			return var1.getTransactionAmount().toPlainString();
 		}
 		
@@ -45,7 +47,9 @@ public interface PaymentFields {
 		@Override
 		public String getValue(Transaction var1) {
 			DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			return format.format(var1.getTransactionDate());
+			if (var1.getTransactionDate() != null)
+				return format.format(var1.getTransactionDate());
+			else return null;
 		}
 		
 	};
@@ -59,8 +63,10 @@ public interface PaymentFields {
 
 		@Override
 		public String getValue(Transaction var1) {
-			DateFormat format = new SimpleDateFormat("dd/MM/yyyy kk:mm");
-			return format.format(var1.getTransactionDate());
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+			if (var1.getTransactionDate() != null)
+				return format.format(var1.getTransactionDate());
+			else return null;
 		}
 		
 	};

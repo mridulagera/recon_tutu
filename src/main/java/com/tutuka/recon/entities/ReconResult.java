@@ -11,31 +11,73 @@ import java.util.Map;
  *
  */
 public class ReconResult {
-	
-	private Map<String, Transaction> closeMatchTutuka;
-	private Map<String, Transaction> closeMatchClient;
+
+	private int totalMatchTxn;
+	private int totalPartialMatchTxn;
+	private int totalUnMatchTTxn;
+	private int totalDuplicateTTxn;
+	private int totalUnMatchCTxn;
+	private int totalDuplicateCTxn;
 	private Map<String, Transaction> partialMatchTutuka;
 	private Map<String, Transaction> partialMatchClient;
 	private Map<String, Transaction> unmatchedTutuka;
 	private Map<String, Transaction> unmatchedClient;
-	private List<Transaction> duplicateTutuka;
-	private List<Transaction> duplicateClient;
 	
-	public Map<String, Transaction> getCloseMatchTutuka() {
-		return closeMatchTutuka;
+	public int getTotalMatchTxn() {
+		return totalMatchTxn;
 	}
-	public void setCloseMatchTutuka(Map<String, Transaction> closeMatchTutuka) {
-		this.closeMatchTutuka = closeMatchTutuka;
+
+	public void setTotalMatchTxn(int totalMatchTxn) {
+		this.totalMatchTxn = totalMatchTxn;
 	}
-	public Map<String, Transaction> getCloseMatchClient() {
-		return closeMatchClient;
+	
+	public int getTotalPartialMatchTxn() {
+		return totalPartialMatchTxn;
 	}
-	public void setCloseMatchClient(Map<String, Transaction> closeMatchClient) {
-		this.closeMatchClient = closeMatchClient;
+
+	public void setTotalPartialMatchTxn(int totalPartialMatchTxn) {
+		this.totalPartialMatchTxn = totalPartialMatchTxn;
 	}
+
+	public int getTotalUnMatchTTxn() {
+		return totalUnMatchTTxn;
+	}
+
+	public void setTotalUnMatchTTxn(int totalUnMatchTTxn) {
+		this.totalUnMatchTTxn = totalUnMatchTTxn;
+	}
+
+	public int getTotalDuplicateTTxn() {
+		return totalDuplicateTTxn;
+	}
+
+	public void setTotalDuplicateTTxn(int totalDuplicateTTxn) {
+		this.totalDuplicateTTxn = totalDuplicateTTxn;
+	}
+
+	public int getTotalUnMatchCTxn() {
+		return totalUnMatchCTxn;
+	}
+
+	public void setTotalUnMatchCTxn(int totalUnMatchCTxn) {
+		this.totalUnMatchCTxn = totalUnMatchCTxn;
+	}
+
+	public int getTotalDuplicateCTxn() {
+		return totalDuplicateCTxn;
+	}
+
+	public void setTotalDuplicateCTxn(int totalDuplicateCTxn) {
+		this.totalDuplicateCTxn = totalDuplicateCTxn;
+	}
+
+	private List<Transaction> possibleDuplicateTutukaTransactions;
+	private List<Transaction> possibleDuplicateClientTransactions;
+
 	public Map<String, Transaction> getPartialMatchTutuka() {
 		return partialMatchTutuka;
 	}
+
 	public void setPartialMatchTutuka(Map<String, Transaction> partialMatchTutuka) {
 		this.partialMatchTutuka = partialMatchTutuka;
 	}
@@ -57,19 +99,31 @@ public class ReconResult {
 	public void setUnmatchedClient(Map<String, Transaction> unmatchedClient) {
 		this.unmatchedClient = unmatchedClient;
 	}
-	public List<Transaction> getDuplicateTutuka() {
-		return duplicateTutuka;
+	public List<Transaction> getPossibleDuplicateTutukaTransactions() {
+		return possibleDuplicateTutukaTransactions;
 	}
-	public void setDuplicateTutuka(List<Transaction> duplicateTutuka) {
-		this.duplicateTutuka = duplicateTutuka;
-	}
-	public List<Transaction> getDuplicateClient() {
-		return duplicateClient;
-	}
-	public void setDuplicateClient(List<Transaction> duplicateClient) {
-		this.duplicateClient = duplicateClient;
+	public void setPossibleDuplicateTutukaTransactions(List<Transaction> possibleDuplicateTutukaTransactions) {
+		this.possibleDuplicateTutukaTransactions = possibleDuplicateTutukaTransactions;
 	}
 	
+	public List<Transaction> getPossibleDuplicateClientTransactions() {
+		return possibleDuplicateClientTransactions;
+	}
+	public void setPossibleDuplicateClientTransactions(List<Transaction> possibleDuplicateClientTransactions) {
+		this.possibleDuplicateClientTransactions = possibleDuplicateClientTransactions;
+	}
+	
+	@Override
+	public String toString() {
+		return "ReconResult [totalPartialMatchTxn=" + totalPartialMatchTxn + ", totalUnMatchTTxn=" + totalUnMatchTTxn
+				+ ", totalDuplicateTTxn=" + totalDuplicateTTxn + ", totalUnMatchCTxn=" + totalUnMatchCTxn
+				+ ", totalDuplicateCTxn=" + totalDuplicateCTxn + ", partialMatchTutuka=" + partialMatchTutuka
+				+ ", partialMatchClient=" + partialMatchClient + ", unmatchedTutuka=" + unmatchedTutuka
+				+ ", unmatchedClient=" + unmatchedClient + ", possibleDuplicateTutukaTransactions="
+				+ possibleDuplicateTutukaTransactions + ", possibleDuplicateClientTransactions="
+				+ possibleDuplicateClientTransactions + "]";
+	}
+
 	
 
 }

@@ -1,7 +1,10 @@
 package com.tutuka.recon.actions;
 
+import org.springframework.stereotype.Service;
+
 import com.tutuka.recon.model.PaymentFields;
 
+@Service("reconTransactionConfig")
 public class ReconTransactionConfig {
 	
 	private PaymentFields.Field[] closeMatchFields;
