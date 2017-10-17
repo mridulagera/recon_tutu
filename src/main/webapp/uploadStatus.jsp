@@ -6,8 +6,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <br> 
-
-<h3>Transactions Upload Status</h3><br>
+<form action="/recon" method="post">
+    <div> <input type="submit" value="Recon Transactions" /></div>
+</form>
+<br> 
 <div class="bigwrapper datagrid">
     <div style="width:50%;float:left;display:table-cell; border-right:solid black 1;"  align="left" >
     <b>Tutuka Transaction Upload Summary</b> <br>
@@ -83,10 +85,10 @@
 </div>
 </c:if>
 
-<br>
-<br>
 <c:if test="${not empty uploadResult.invalidTutuka}">
 
+<br>
+<br>
 <span class="coloredback">Ignored Tutuka's Invalid Transaction</span>
 <div class="datagrid">
 <c:forEach items="${uploadResult.invalidTutuka}" var="trans">
@@ -95,10 +97,10 @@
 </div>
 </c:if>
 
-<br>
-<br>
 <c:if test="${not empty uploadResult.invalidClient}">
 
+<br>
+<br>
 <span class="coloredback">Ignored Client's Invalid Transaction</span>
 <div class="datagrid">
 
@@ -107,12 +109,6 @@
 </c:forEach>
 </div>
 </c:if>
-
-<br>
-<br>
-<form action="/recon" method="post">
-    <div> <input type="submit" value="Recon Transactions" /></div>
-</form> 
 
 </body>
 </html>

@@ -10,7 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tutuka.recon.actions.ReconTransactionConfig;
+import com.tutuka.recon.config.ReconTransactionConfig;
 import com.tutuka.recon.entities.ReconResult;
 import com.tutuka.recon.entities.Transaction;
 import com.tutuka.recon.model.PaymentFields;
@@ -21,6 +21,9 @@ import com.tutuka.recon.service.ReconciliationService;
 public class ReconciliationServiceImpl implements ReconciliationService{
 
 
+	@Autowired
+	private ReconTransactionConfig config;
+	
 	private PaymentFields.Field<Transaction>[] closeMatchFieldsL1;
 	private PaymentFields.Field<Transaction>[] closeMatchFieldsL2;
 	

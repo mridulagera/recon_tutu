@@ -36,7 +36,7 @@ public class ReconController {
         									uploadResult.getTutukaTransactions());  
         	      	
 
-        	System.out.println("recon result " + reconResult);
+        	//System.out.println("recon result " + reconResult);
         	
         	model.addAttribute("reconResult", reconResult);
         	session.removeAttribute("uploadResult");

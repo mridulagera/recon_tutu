@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" type="text/css" href="/css/tutuka.css"/>
-<%try{ %>
-<%@ include file="/fileinput.jsp" %>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 
@@ -162,9 +160,5 @@
 </div>
 </c:if>
 
-<%}
-catch(Exception e){
-	e.printStackTrace();
-}%>
 </body>
 </html>

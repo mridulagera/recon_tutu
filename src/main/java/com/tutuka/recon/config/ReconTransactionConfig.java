@@ -1,4 +1,4 @@
-package com.tutuka.recon.actions;
+package com.tutuka.recon.config;
 
 import org.springframework.stereotype.Service;
 

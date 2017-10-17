@@ -46,7 +46,7 @@ public class UploadController {
     
     @GetMapping("/")
     public String index() {
-        return "upload";
+        return "fileinput";
     }
     
     @PostMapping("/upload") // //new annotation since 4.3
