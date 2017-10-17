@@ -17,6 +17,20 @@ import com.tutuka.recon.model.PaymentFields;
 import com.tutuka.recon.model.PaymentFields.Field;
 import com.tutuka.recon.service.ReconciliationService;
 
+/**
+ * Reconciliation Service compares each & every transaction in one object with other
+ * 
+ *  It finally returns the re-conciliation result which contains the details about the differences
+ *  Differences are categorized in following ways:
+ *  1. Un-matched Transactions - No match found
+ *  2. Partial Match - Few fields match & transactions look similar but may have some issue. 
+ *  Manual Intervention is required to re-view such transactions
+ *  3. Possible duplicate transaction
+ *  4. Matching transcations
+ *  
+ * @author Mridula
+ *
+ */
 @Service("reconService")
 public class ReconciliationServiceImpl implements ReconciliationService{
 
@@ -24,7 +38,9 @@ public class ReconciliationServiceImpl implements ReconciliationService{
 	@Autowired
 	private ReconTransactionConfig config;
 	
+	//L1 fields matching, if these fields match then transaction is matching
 	private PaymentFields.Field<Transaction>[] closeMatchFieldsL1;
+	//L2 fields matching, if this also match then also we consider transaction matches
 	private PaymentFields.Field<Transaction>[] closeMatchFieldsL2;
 	
 	@Autowired
@@ -44,7 +60,9 @@ public class ReconciliationServiceImpl implements ReconciliationService{
 				
 	}
 	
-
+/**
+ * reconcile records matches all the transaction in one map with transactions in other map one by one
+ */
 	@Override
 	public ReconResult reconcileRecords(Map<String, Transaction> clientTransactions,
 			Map<String, Transaction> tutukaTransactions){		
@@ -62,6 +80,7 @@ public class ReconciliationServiceImpl implements ReconciliationService{
 		Set<String> tutukaTxnKeys = tutukaTransactions.keySet();
 		Iterator<String> itrTutukaTxnKeys = tutukaTxnKeys.iterator();
 		int matchingTxnCount = 0;
+		//iterate through tutuka transcations one by one & try to find a match in client transactions
 		while(itrTutukaTxnKeys.hasNext())
 		{
 			String tutukaTxnKey = itrTutukaTxnKeys.next();
@@ -85,11 +104,14 @@ public class ReconciliationServiceImpl implements ReconciliationService{
 				
 			}
 			else {
+				//if transaction key don't match then add to un-match collection
 				updateUnMatchedTutukaResults(result, tutukaTxn);
 			}
 		}
 		if (!clientTransactions.isEmpty())
 		{
+			//if after looping through tutuka transactions, still some transactions are remaining in client then
+			//we verify them against un-matched pool & finally add to partial-match or un-match collections
 			updateUnMatchedClientResults(result, clientTransactions);
 		}
 		
@@ -99,6 +121,11 @@ public class ReconciliationServiceImpl implements ReconciliationService{
 		return result;
 	}
 	
+	/**
+	 * This method populates summary of re-conciliation
+	 * @param result
+	 * @param matchingTxnCount
+	 */
 	private void updateSummary(ReconResult result, int matchingTxnCount) {
 		result.setTotalMatchTxn(matchingTxnCount);
 		result.setTotalPartialMatchTxn(
@@ -115,6 +142,13 @@ public class ReconciliationServiceImpl implements ReconciliationService{
 		
 	}
 
+/**
+ * This method update the partial match collection
+ * @param result
+ * @param clientTxn
+ * @param tutukaTxn
+ * @param tutukaTxnKey
+ */
 
 	private void updatePartialMatch(ReconResult result, Transaction clientTxn, Transaction tutukaTxn, String tutukaTxnKey)
 	{
@@ -197,7 +231,7 @@ public class ReconciliationServiceImpl implements ReconciliationService{
 				tutukaUnMatchedTxns.remove(clientTxnKey);				
 			}
 			else {
-			
+			//add transcations to un-match pool
 				Map<String, Transaction> clientUnMatchMatch = result.getUnmatchedClient();				
 				if (clientUnMatchMatch == null)
 				{			
@@ -215,6 +249,12 @@ public class ReconciliationServiceImpl implements ReconciliationService{
 		}
 	}
 	
+	/**
+	 * This method matches specific fields of the two transcations
+	 * @param clientTxn
+	 * @param tutukaTxn
+	 * @return
+	 */
 	private boolean matchTxns(Transaction clientTxn, Transaction tutukaTxn)
 	{
 		if (!clientTxn.equals(tutukaTxn))

@@ -64,12 +64,13 @@ public class UploadController {
         }
 
         try {
-        	
+        	//read the file & load the data in various collections 
         	UploadResult uploadResult = new UploadResult();
         	System.out.println("Loading tutuka transactions");
         	Map<String, Transaction> transactions = new HashMap<String, Transaction>();
         	List<Transaction> duplicateTrans =	new ArrayList<Transaction>();
         	List<String>invalidTrans =	new ArrayList<String>();
+        	//read tutuka transcations file & bucket transaction in valid/invalid/duplicate transactions
         	readFileValidate(tfile, transactions, duplicateTrans, invalidTrans);        	
         	
         	uploadResult.setTutukaTransactions(transactions);
@@ -85,6 +86,7 @@ public class UploadController {
         	transactions = new HashMap<String, Transaction>();
         	duplicateTrans =	new ArrayList<Transaction>();
         	invalidTrans =	new ArrayList<String>();
+        	//read Client transcations file & bucket transaction in valid/invalid/duplicate transactions
         	readFileValidate(cfile, transactions, duplicateTrans,invalidTrans);
         	
         	uploadResult.setClientTransactions(transactions);
@@ -124,12 +126,16 @@ public class UploadController {
             	 String[] transaction = line.split(cvsSplitBy);
             	 Transaction t;
 				try {
+					//build transaction object from the attributes in file
+					//if field level validations fail then raise exception & mark the transaction as invalid
 					t = buildTransaction(transaction);
 				} catch (Exception e) {
 					invalidTrans.add(line);
 					System.err.println(e.getMessage());
 					continue;
 				}
+				
+				//add transaction to duplicate/valid transaction pool
             	 updateMaps(transactions, t, dupTransaction);
              }
           } catch (IOException e) {
@@ -154,6 +160,12 @@ public class UploadController {
 		
 	}
 	
+	/**
+	 * Transaction is uniquely identified by combination of Transaction Id & Transaction Description
+	 * Build the key using these params
+	 * @param t
+	 * @return
+	 */
 	private String buildKey(Transaction t) {
 		return t.getTransactionID() + t.getTransactionDescription();
 	}
